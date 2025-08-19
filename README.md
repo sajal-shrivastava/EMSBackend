@@ -20,8 +20,5 @@ This is a simple Employee Management System (EMS) backend built with Spring Boot
 2. Run `mvn spring-boot:run` or execute the `EmsApplication` main class.
 3. The API will be available at `http://localhost:8080/api/employee`.
 
-## Testing
-Unit tests are provided for service and controller layers using JUnit and Mockito.
-
 ---
 For more details, see the code and comments in the source files.
