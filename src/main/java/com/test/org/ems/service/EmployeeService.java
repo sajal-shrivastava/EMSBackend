@@ -1,5 +1,6 @@
 package com.test.org.ems.service;
 
+import com.test.org.ems.mapper.PaginatedResponse;
 import com.test.org.ems.model.Employee;
 
 import java.util.List;
@@ -10,5 +11,7 @@ public interface EmployeeService {
     int updateEmployee(Employee empl);
     int deleteEmployee(int id);
     Employee getEmployeeById(int id);
+
+    PaginatedResponse getPaginatedResponse(int page, int size);
 
 }

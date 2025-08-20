@@ -37,4 +37,15 @@ public class EmployeeRepo {
         String sql = "SELECT * FROM employee where empid=?";
         return jdbcTemplate.queryForObject(sql, new Object[]{id}, new EmployeeDataMapper());
     }
+
+    public List<Employee> findEmployeeWithPagination(int page, int size){
+        int offset = page * size;
+        String sql = "Select * from employee LIMIT ? OFFSET ?";
+        return jdbcTemplate.query(sql, new Object[]{size, offset}, new EmployeeDataMapper());
+    }
+
+    public int getTotalCount(){
+        String sql = "SELECT count(*) from employee";
+        return jdbcTemplate.queryForObject(sql, Integer.class);
+    }
 }
