@@ -46,12 +46,18 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
 
     @Override
-    public PaginatedResponse getPaginatedResponse(int page, int size) {
-        List<Employee> employees = emplRepo.findEmployeeWithPagination(page, size);
-        int count = emplRepo.getTotalCount();
-        int totalPages = count/size;
+    public PaginatedResponse getPaginatedResponse(int page, int size, String location) {
+        List<Employee> employees = emplRepo.findEmployeeWithPagination(page, size, location);
+        int count = emplRepo.getTotalCount(location);
+        int totalPages = (int) Math.ceil((double) count / size);
+
         return new PaginatedResponse(employees, page, size, count, totalPages);
 
+    }
+
+    @Override
+    public List<String> findAllLocations() {
+        return emplRepo.findAllLocations();
     }
 
 

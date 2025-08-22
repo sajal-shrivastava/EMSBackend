@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -38,14 +39,34 @@ public class EmployeeRepo {
         return jdbcTemplate.queryForObject(sql, new Object[]{id}, new EmployeeDataMapper());
     }
 
-    public List<Employee> findEmployeeWithPagination(int page, int size){
+    public List<Employee> findEmployeeWithPagination(int page, int size, String location) {
         int offset = page * size;
-        String sql = "Select * from employee LIMIT ? OFFSET ?";
-        return jdbcTemplate.query(sql, new Object[]{size, offset}, new EmployeeDataMapper());
+        String sql = "";
+        List<Employee> employeeList = new ArrayList<>();
+
+        if (location == null || location.isEmpty()) {
+            sql = "SELECT * FROM employee LIMIT ? OFFSET ?";
+            employeeList = jdbcTemplate.query(sql, new Object[]{size, offset}, new EmployeeDataMapper());
+        } else {
+            sql = "SELECT * FROM employee WHERE location = ? LIMIT ? OFFSET ?";
+            employeeList = jdbcTemplate.query(sql, new Object[]{location, size, offset}, new EmployeeDataMapper());
+        }
+        return employeeList;
     }
 
-    public int getTotalCount(){
+
+    public int getTotalCount(String location){
         String sql = "SELECT count(*) from employee";
+
+        if(location != ""){
+            sql = "SELECT count(*) from employee where location = ?";
+            return jdbcTemplate.queryForObject(sql, new Object[]{location}, Integer.class);
+        }
         return jdbcTemplate.queryForObject(sql, Integer.class);
+    }
+
+    public List<String> findAllLocations() {
+        String sql = "SELECT location FROM employee";
+        return jdbcTemplate.queryForList(sql, String.class);
     }
 }

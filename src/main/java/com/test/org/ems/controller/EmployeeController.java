@@ -50,9 +50,14 @@ public class EmployeeController {
         return employeeService.getEmployeeById(id);
     }
 
+    @GetMapping("/locations")
+    public List<String> getAllLocations(){
+        return employeeService.findAllLocations();
+    }
+
     @GetMapping("/page")
-    public PaginatedResponse findPaginatedData(@RequestParam int page, @RequestParam int size){
-        return employeeService.getPaginatedResponse(page,size);
+    public PaginatedResponse findPaginatedData(@RequestParam int page, @RequestParam int size, @RequestParam(defaultValue = "") String location){
+        return employeeService.getPaginatedResponse(page,size,location);
     }
 
 }

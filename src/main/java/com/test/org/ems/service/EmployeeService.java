@@ -12,6 +12,8 @@ public interface EmployeeService {
     int deleteEmployee(int id);
     Employee getEmployeeById(int id);
 
-    PaginatedResponse getPaginatedResponse(int page, int size);
+    PaginatedResponse getPaginatedResponse(int page, int size, String location);
+
+    List<String> findAllLocations();
 
 }
